@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="index.js"></script>
+</head>
+
+<body>
+    <h1>Soy la pagina principal</h1>
+    <a href="pagina2.html">Ir a la pagina 2</a>
+    <button class="adelante">adelante</button>
+    <button class="home">home</button>
+    <button class="go">go</button>
+    <button class="producto">producto</button>
+    <button class="producto2">producto2</button>
+
+
+
+    <script>
+        // console.log(history.length);
+
+        const btnadelante = document.querySelector('.adelante');
+        const btnhome = document.querySelector('.home');
+        const btngo = document.querySelector('.go');
+        const btnproducto = document.querySelector('.producto')
+        const btnproducto2 = document.querySelector('.producto2')
+
+        let adelante = () => {
+            history.forward();
+        }
+
+        btnadelante.addEventListener('click', adelante);
+
+        let go = () => {
+            let numero = parseInt(prompt('Cuantas paginas quiere avanzar'));
+            history.go(numero);
+        }
+        btngo.addEventListener('click', go);
+
+
+
+        //Cambia la URL pero no redireccion y sigue estando en la misma pagina
+        let home = () => {
+            history.pushState(null, 'Home', '/home')
+        }
+        btnhome.addEventListener('click', home);
+
+
+        //Pasar un objeto hace que para proximas navegaciones por esa pagina lo guarde en la cache y no hace falta pedir peticiones al servidor
+        let listaproductos = {
+            page: 'Productos',
+            productos: [{
+                nombre: 'A',
+                precio: 100
+            }, {
+                nombre: 'B',
+                precio: 1200
+            }]
+        }
+
+        let productos = () => {
+            history.pushState(listaproductos, 'Productos', '/productos')
+        }
+        btnproducto.addEventListener('click', productos);
+
+
+        let productos2 = () => {
+            history.replaceState(listaproductos = {
+                page: 'Productos2',
+                productos: [{
+                    nombre: 'A',
+                    precio: 100
+                }, {
+                    nombre: 'B',
+                    precio: 1200
+                }, {
+                    nombre: 'C',
+                    precio: 300
+                }]
+
+            }, 'Productos', '/productosABC')
+        }
+
+        btnproducto2.addEventListener('click', productos2);
+
+
+        // Un evento popstate es dirigido a la ventana cada vez que la entrada al historial cambia.
+        //  Si la entrada al historial es activada y fue creada por un llamado a pushState o afectada
+        //   por una llamada a replaceState, la propiedad state del evento popstate contiene una copia
+        //    del historial de entradas del objeto estado.
+
+
+        // window.addEventListener('popstate', e => {
+        //     console.log('POP STATE; ', history.state);
+        // });
+    </script>
+</body>
+
+</html>
